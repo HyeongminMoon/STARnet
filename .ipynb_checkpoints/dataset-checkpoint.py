@@ -53,6 +53,8 @@ def load_img_test(filepath, scale):
 
 def load_img_nodown(filepath):
     list=os.listdir(filepath)
+    if '.ipynb_checkpoints' in list:
+        list.remove('.ipynb_checkpoints')
     list.sort()
     
     input = [Image.open(filepath+'/'+list[i]).convert('RGB') for i in [0,len(list)-1]]
@@ -284,6 +286,7 @@ class DatasetFromFolderInterp(data.Dataset):
         super(DatasetFromFolderInterp, self).__init__()
         alist = [line.rstrip() for line in open(join(image_dir,file_list))]
         self.image_filenames = [join(image_dir,x) for x in alist]
+        print(self.image_filenames)
         self.transform = transform
 
     def __getitem__(self, index):
